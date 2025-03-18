@@ -1,12 +1,10 @@
-import { useState } from "react";
 import "./App.css";
 import { Grid, GridItem } from "@chakra-ui/react";
 import GoogleMaps from "./Components/GoogleMaps";
 import NavBar from "./Components/NavBar";
+import getLocation from "./services/GetLocation";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Grid
       templateAreas={`"nav map" "aside map"`}
