@@ -1,10 +1,13 @@
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import getLocation from "../services/GetLocation";
+import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
+import { Position } from "../services/GetLocation";
 import { Box, Spinner } from "@chakra-ui/react";
 
-const GoogleMaps = () => {
-  const { position, isLoading } = getLocation();
+interface Props {
+  position: Position | null;
+  isLoading: boolean;
+}
 
+const GoogleMaps = ({ position, isLoading }: Props) => {
   if (isLoading)
     return (
       <Box position="relative" height="100%">
@@ -22,6 +25,7 @@ const GoogleMaps = () => {
     <>
       <APIProvider apiKey="AIzaSyBQvQLke_0JE3jt9Ov3ZWOSUe04c3ESEAo">
         <Map
+          mapId="17efa118721c6d3a"
           style={{ height: "100%" }}
           defaultCenter={
             position
@@ -32,7 +36,7 @@ const GoogleMaps = () => {
           gestureHandling={"greedy"}
           disableDefaultUI={true}
         />
-        <Marker
+        <AdvancedMarker
           position={
             position && { lat: position.latitude, lng: position.longitude }
           }

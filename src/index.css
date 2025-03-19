@@ -7,3 +7,33 @@
 google-map {
   height: 100vh;
 }
+
+.headerContainer {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.headerText {
+  position: absolute;
+  max-width: 70%;
+  bottom: 0;
+  padding: 20px;
+  z-index: 100;
+}
+
+.slick-slide {
+  > div {
+    margin-inline: 10px;
+  }
+}
