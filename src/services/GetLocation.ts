@@ -6,17 +6,17 @@ export interface Position {
 }
 
 const getLocation = () => {
-  const [position, setPosition] = useState<Position | null>(null);
+  const [positionCoords, setPosition] = useState<Position | null>(null);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        (positionCoords) => {
           setPosition({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            latitude: positionCoords.coords.latitude,
+            longitude: positionCoords.coords.longitude,
           });
           setLoading(false);
         },
@@ -28,7 +28,7 @@ const getLocation = () => {
     }
   }, []);
 
-  return { position, isLoading };
+  return { positionCoords, isLoading };
 };
 
 export default getLocation;

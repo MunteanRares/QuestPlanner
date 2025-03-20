@@ -1,7 +1,6 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { Position } from "../../services/GetLocation";
 import FeaturedPlaces from "./FeaturedPlaces";
-import { BsChatLeftQuote } from "react-icons/bs";
 import MostPopularPlaces from "./MostPopularPlaces";
 
 interface Props {

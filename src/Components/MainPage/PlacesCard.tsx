@@ -18,7 +18,7 @@ const PlacesCard = ({ place }: Props) => {
       transition="all 1s ease-out"
       display="flex"
       overflow="hidden"
-      borderRadius={8}
+      borderRadius={6}
     >
       <Image maxHeight="10rem" src={imageSrc} />
       <Card.Body>

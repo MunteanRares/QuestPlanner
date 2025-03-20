@@ -37,3 +37,11 @@ google-map {
     margin-inline: 10px;
   }
 }
+
+.dropdown-search-result {
+  position: absolute;
+  border-radius: 4px;
+  padding: 4px 8px;
+  top: "100%";
+  left: 0;
+}
