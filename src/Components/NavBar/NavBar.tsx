@@ -3,13 +3,20 @@ import SearchInput from "./SearchInput";
 import whiteLogo from "../../assets/logo-white.webp";
 import darkLogo from "../../assets/logo-dark.webp";
 import { ColorModeButton, useColorMode } from "../ui/color-mode";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
 
   return (
     <HStack justifyContent="space-between" paddingX={8} paddingY={5}>
-      <Image width="200px" src={colorMode === "dark" ? whiteLogo : darkLogo} />
+      <Image
+        onClick={() => navigate("/")}
+        cursor="pointer"
+        width="200px"
+        src={colorMode === "dark" ? whiteLogo : darkLogo}
+      />
       <HStack>
         <SearchInput />
         <ColorModeButton />

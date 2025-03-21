@@ -2,7 +2,7 @@ import { Grid, GridItem, HStack } from "@chakra-ui/react";
 import NavBar from "../NavBar/NavBar";
 import GoogleMaps from "../GoogleMaps";
 import ContentMainPage from "./ContentMainPage";
-import HeaderPage from "./HeaderPage";
+import HeaderPage from "../HeaderPage";
 import getLocation from "../../services/GetLocation";
 
 const MainPage = () => {

@@ -1,21 +1,14 @@
-import {
-  Box,
-  HStack,
-  Input,
-  List,
-  ListItem,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Input, List, Spinner } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import useCities from "../../hooks/useCities";
-import { FaCity } from "react-icons/fa";
+import CityListItem from "./CityListItem";
 
 const SearchInput = () => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { data, isLoading } = useCities(searchTerm);
+  console.log(data);
 
-  const { data, isLoading } = useCities(searchTerm, [searchTerm]);
   return (
     <>
       <Box position="relative">
@@ -43,18 +36,12 @@ const SearchInput = () => {
         >
           {data &&
             data.map((item, index) => (
-              <ListItem
-                marginBottom={index === data.length - 1 ? "0" : "10px"}
-                borderBottomWidth={index === data.length - 1 ? "0" : "1px"}
-                key={item.description}
-              >
-                <Text fontSize="medium" fontWeight="medium">
-                  {item.structuredFormatting.mainText}
-                </Text>
-                <Text fontSize="12px" color="fg.subtle">
-                  {item.description}
-                </Text>
-              </ListItem>
+              <CityListItem
+                key={index + item.placeId}
+                item={item}
+                index={index}
+                data={data}
+              />
             ))}
         </List.Root>
       </Box>

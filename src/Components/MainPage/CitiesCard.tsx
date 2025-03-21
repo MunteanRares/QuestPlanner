@@ -10,7 +10,7 @@ interface Props {
   place: PlacesCardObj;
 }
 
-const PlacesCard = ({ place }: Props) => {
+const CitiesCard = ({ place }: Props) => {
   const { imageSrc, title, description } = place;
 
   return (
@@ -33,4 +33,4 @@ const PlacesCard = ({ place }: Props) => {
   );
 };
 
-export default PlacesCard;
+export default CitiesCard;

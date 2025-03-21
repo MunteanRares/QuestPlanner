@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import PlacesCard, { PlacesCardObj } from "./MainPage/PlacesCard";
+import CitiesCard, { PlacesCardObj } from "./MainPage/CitiesCard";
 import { useColorMode } from "./ui/color-mode";
 
 interface Props {
@@ -27,7 +27,7 @@ const Carousel = ({ data }: Props) => {
     <Box maxWidth="45vw">
       <Slider {...settings}>
         {data.map((item, index) => (
-          <PlacesCard key={index} place={item} />
+          <CitiesCard key={index} place={item} />
         ))}
       </Slider>
     </Box>
