@@ -13,7 +13,6 @@ const CityListItem = ({ item, index, data }: Props) => {
 
   const handleCityClick = (city: string, placeId: string) => {
     navigate(`/${city}/${placeId}`);
-    navigate(0);
   };
 
   return (

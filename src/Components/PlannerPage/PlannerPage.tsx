@@ -19,7 +19,12 @@ const PlannerPage = () => {
       </GridItem>
 
       <GridItem area="main">
-        <HeaderPage title={city} image={data[0] && data[0].photoLinks} />
+        <HeaderPage
+          width="50%"
+          title={city}
+          isLoading={isLoading}
+          image={data[0] && data[0].photoLinks}
+        />
       </GridItem>
     </Grid>
   );

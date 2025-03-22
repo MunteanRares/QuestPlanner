@@ -4,12 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CitiesCard, { PlacesCardObj } from "./MainPage/CitiesCard";
 import { useColorMode } from "./ui/color-mode";
+import SkeletonCitiesCard from "./MainPage/SkeletonCitiesCard";
 
 interface Props {
   data: PlacesCardObj[];
+  isLoading: boolean;
 }
 
-const Carousel = ({ data }: Props) => {
+const Carousel = ({ data, isLoading }: Props) => {
   const { colorMode } = useColorMode();
 
   const settings = {
@@ -26,9 +28,13 @@ const Carousel = ({ data }: Props) => {
   return (
     <Box maxWidth="45vw">
       <Slider {...settings}>
-        {data.map((item, index) => (
-          <CitiesCard key={index} place={item} />
-        ))}
+        {data.map((item, index) =>
+          isLoading ? (
+            <SkeletonCitiesCard />
+          ) : (
+            <CitiesCard key={index} place={item} />
+          )
+        )}
       </Slider>
     </Box>
   );

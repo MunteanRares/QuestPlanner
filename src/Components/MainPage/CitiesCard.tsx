@@ -1,9 +1,12 @@
-import { Card, Image, Text } from "@chakra-ui/react";
+import { Card, Image, Spinner, Text } from "@chakra-ui/react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useNavigate } from "react-router-dom";
 
 export interface PlacesCardObj {
   imageSrc: string;
   title: string;
   description: string;
+  placeId: string;
 }
 
 interface Props {
@@ -12,15 +15,27 @@ interface Props {
 
 const CitiesCard = ({ place }: Props) => {
   const { imageSrc, title, description } = place;
+  const navigate = useNavigate();
+
+  const handleCityClick = (city: string, placeId: string) => {
+    navigate(`/${city}/${placeId}`);
+  };
 
   return (
     <Card.Root
+      height="16rem"
       transition="all 1s ease-out"
       display="flex"
       overflow="hidden"
       borderRadius={6}
     >
-      <Image maxHeight="10rem" src={imageSrc} />
+      <LazyLoadImage
+        onClick={() => handleCityClick(place.title, place.placeId)}
+        effect="blur"
+        referrerPolicy="no-referrer"
+        className="cities-card-image"
+        src={imageSrc}
+      />
       <Card.Body>
         <Card.Title>
           <Text>{title}</Text>

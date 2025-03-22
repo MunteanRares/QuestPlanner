@@ -1,30 +1,48 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Image, Skeleton, Spinner, Text } from "@chakra-ui/react";
 import defImage from "../assets/home-page.webp";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 interface Props {
   title?: string;
-  image: string;
+  image?: string;
+  isLoading?: boolean;
+  width: string;
 }
 
-const HeaderPage = ({ title, image }: Props) => {
+const HeaderPage = ({ title, image, width, isLoading }: Props) => {
   return (
     <>
       <Box
-        width="50%"
+        width={width}
         display="flex"
+        position="relative"
         justifySelf={"center"}
         justifyContent="left"
         marginY="30px"
         marginX="60px"
         className="headerContainer"
       >
-        <Image
-          width="100%"
-          filter="auto"
-          // blur="2px"
-          src={title ? image : defImage}
-          referrerPolicy="no-referrer"
-        ></Image>
+        {isLoading ? (
+          <Spinner
+            boxSize="70px"
+            bottom="40%"
+            borderWidth="4px"
+            left="45%"
+            position={"absolute"}
+            justifySelf={"center"}
+          />
+        ) : (
+          <LazyLoadImage
+            width="100%"
+            effect="blur"
+            wrapperProps={{
+              style: { transitionDelay: "0.6s" },
+            }}
+            src={image ? image : defImage}
+            referrerPolicy="no-referrer"
+          ></LazyLoadImage>
+        )}
         <Box className="overlay">
           <Box
             alignItems="center"
