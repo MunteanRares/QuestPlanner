@@ -4,7 +4,6 @@ import GoogleMaps from "../GoogleMaps";
 import ContentMainPage from "./ContentMainPage";
 import HeaderPage from "../HeaderPage";
 import getLocation from "../../services/GetLocation";
-import useGetMostVisitedCities from "../../hooks/useGetMostVisitedCities";
 
 const MainPage = () => {
   const { positionCoords, isLoading: locationLoading } = getLocation();
@@ -23,7 +22,7 @@ const MainPage = () => {
 
       <GridItem paddingY={7} paddingX={10} area="aside">
         <HStack display="flex" flexFlow="column" spaceY={10}>
-          <HeaderPage width="100%" />
+          <HeaderPage />
           <ContentMainPage position={positionCoords} />
         </HStack>
       </GridItem>

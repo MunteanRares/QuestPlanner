@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export interface PlacesCardObj {
   imageSrc: string;
   title: string;
+  cityRedirect: string;
   description: string;
   placeId: string;
 }
@@ -23,14 +24,15 @@ const CitiesCard = ({ place }: Props) => {
 
   return (
     <Card.Root
-      height="16rem"
+      minHeight={"17rem"}
+      maxHeight={"20rem"}
       transition="all 1s ease-out"
       display="flex"
       overflow="hidden"
       borderRadius={6}
     >
       <LazyLoadImage
-        onClick={() => handleCityClick(place.title, place.placeId)}
+        onClick={() => handleCityClick(place.cityRedirect, place.placeId)}
         effect="blur"
         referrerPolicy="no-referrer"
         className="cities-card-image"

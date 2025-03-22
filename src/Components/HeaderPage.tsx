@@ -7,18 +7,16 @@ interface Props {
   title?: string;
   image?: string;
   isLoading?: boolean;
-  width: string;
 }
 
-const HeaderPage = ({ title, image, width, isLoading }: Props) => {
+const HeaderPage = ({ title, image, isLoading }: Props) => {
   return (
     <>
       <Box
-        width={width}
         display="flex"
         position="relative"
         justifySelf={"center"}
-        justifyContent="left"
+        justifyContent="center"
         marginY="30px"
         marginX="60px"
         className="headerContainer"
@@ -34,7 +32,11 @@ const HeaderPage = ({ title, image, width, isLoading }: Props) => {
           />
         ) : (
           <LazyLoadImage
-            width="100%"
+            style={{
+              width: "100%",
+              justifySelf: "center",
+              objectFit: "cover",
+            }}
             effect="blur"
             wrapperProps={{
               style: { transitionDelay: "0.6s" },

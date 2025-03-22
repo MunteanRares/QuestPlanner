@@ -46,8 +46,8 @@ google-map {
 }
 
 .cities-card-image {
-  max-height: 10rem;
   width: 100%;
+  max-height: 8rem;
   object-fit: cover;
   cursor: pointer;
 }

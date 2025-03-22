@@ -1,20 +1,26 @@
-import { Box, Skeleton } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Carousel from "../Carousel";
-import useGetMostVisitedCities from "../../hooks/useGetMostVisitedCities";
+import useGetNearbyPlaces from "../../hooks/useGetNearbyPlaces";
+import { Position } from "../../services/GetLocation";
 import SkeletonCitiesCard from "./SkeletonCitiesCard";
 
-const MostPopularPlaces = () => {
-  const { data, isLoading } = useGetMostVisitedCities();
+interface Props {
+  position: Position | null;
+}
+
+const AroundYourArea = ({ position }: Props) => {
+  const { data, isLoading } = useGetNearbyPlaces(
+    position?.latitude,
+    position?.longitude
+  );
 
   const placesCardData = data.map((place) => ({
     imageSrc: place.imageUrl,
-    title: place.cityName,
-    cityRedirect: place.cityName,
-    description: place.cityName + place.country,
+    title: place.placeName,
+    cityRedirect: place.currentCityName,
+    description: place.formattedAddress,
     placeId: place.placeId,
   }));
-
-  console.log(data);
 
   return (
     <>
@@ -33,4 +39,4 @@ const MostPopularPlaces = () => {
   );
 };
 
-export default MostPopularPlaces;
+export default AroundYourArea;

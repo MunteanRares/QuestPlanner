@@ -20,7 +20,6 @@ const PlannerPage = () => {
 
       <GridItem area="main">
         <HeaderPage
-          width="50%"
           title={city}
           isLoading={isLoading}
           image={data[0] && data[0].photoLinks}
