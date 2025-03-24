@@ -1,12 +1,16 @@
-import { Box, Input, List, Spinner } from "@chakra-ui/react";
+import { Box, Input, List, Spinner, Text } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import useCities from "../../hooks/useCities";
-import CityListItem from "./CityListItem";
+import useNearbyPlacesSearch from "../../hooks/useNearbyPlacesSearch";
 
-const SearchInput = () => {
+interface Props {
+  lat: string;
+  lng: string;
+}
+
+const SearchInputPlaces = ({ lat, lng }: Props) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading } = useCities(searchTerm);
+  const { data, isLoading } = useNearbyPlacesSearch(searchTerm, lat, lng);
   console.log(data);
 
   return (
@@ -16,7 +20,7 @@ const SearchInput = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
           ref={searchRef}
-          placeholder="Search Cities..."
+          placeholder="Search Places..."
           variant="outline"
           type="search"
         ></Input>
@@ -36,12 +40,12 @@ const SearchInput = () => {
         >
           {data &&
             data.map((item, index) => (
-              <CityListItem
-                key={index + item.placeId}
-                item={item}
-                index={index}
-                data={data}
-              />
+              <Box key={index}>
+                <Text>{item.placeName}</Text>
+                {item.placeTags.map((tag: string, tagIndex: number) => (
+                  <Text key={tagIndex}>{tag}</Text>
+                ))}
+              </Box>
             ))}
         </List.Root>
       </Box>
@@ -49,4 +53,4 @@ const SearchInput = () => {
   );
 };
 
-export default SearchInput;
+export default SearchInputPlaces;

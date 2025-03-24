@@ -10,7 +10,7 @@ const MostPopularPlaces = () => {
     imageSrc: place.imageUrl,
     title: place.cityName,
     cityRedirect: place.cityName,
-    description: place.cityName + place.country,
+    description: place.cityName + "," + place.country,
     placeId: place.placeId,
   }));
 

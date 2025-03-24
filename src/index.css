@@ -4,6 +4,10 @@
   font-family: "Montserrat";
 }
 
+body {
+  overflow-y: scroll;
+}
+
 google-map {
   height: 100vh;
 }
@@ -50,4 +54,18 @@ google-map {
   max-height: 8rem;
   object-fit: cover;
   cursor: pointer;
+}
+
+.section {
+  margin: 0rem 10rem 0 10rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 30px;
+}
+
+.section-middle {
+  margin-top: 2rem;
 }

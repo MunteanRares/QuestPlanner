@@ -13,12 +13,13 @@ const HeaderPage = ({ title, image, isLoading }: Props) => {
   return (
     <>
       <Box
+        width={"fit-content"}
         display="flex"
         position="relative"
         justifySelf={"center"}
         justifyContent="center"
         marginY="30px"
-        marginX="60px"
+        marginX="auto"
         className="headerContainer"
       >
         {isLoading ? (

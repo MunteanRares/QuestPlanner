@@ -1,5 +1,5 @@
 import { HStack, Image } from "@chakra-ui/react";
-import SearchInput from "./SearchInput";
+import SearchInputCities from "./SearchInputCities";
 import whiteLogo from "../../assets/logo-white.webp";
 import darkLogo from "../../assets/logo-dark.webp";
 import { ColorModeButton, useColorMode } from "../ui/color-mode";
@@ -18,7 +18,7 @@ const NavBar = () => {
         src={colorMode === "dark" ? whiteLogo : darkLogo}
       />
       <HStack>
-        <SearchInput />
+        <SearchInputCities />
         <ColorModeButton />
       </HStack>
     </HStack>

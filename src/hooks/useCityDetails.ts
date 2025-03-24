@@ -1,17 +1,13 @@
 import useData from "./useData";
 
 interface LocationModel {
-  lat: number;
-  lng: number;
-}
-
-interface GeometryLocation {
-  location: LocationModel;
+  latitude: string;
+  longitude: string;
 }
 
 interface DetailedCityModel {
   formattedAddress: string;
-  geometry: GeometryLocation;
+  location: LocationModel;
   photoLinks: string;
   vicinity: string;
   website: string;
