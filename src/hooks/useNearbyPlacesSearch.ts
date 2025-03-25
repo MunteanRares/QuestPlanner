@@ -10,7 +10,7 @@ const useNearbyPlacesSearch = (searchTerm: string, lat: string, lng: string) =>
     "/api/places/searchNearby",
     500,
     searchTerm.length > 2
-      ? { params: { cityName: searchTerm, lat: lat, lng: lng } }
+      ? { params: { searchTerm: searchTerm, latitude: lat, longitude: lng } }
       : null,
     [searchTerm]
   );

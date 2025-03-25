@@ -1,6 +1,7 @@
 import { ListItem, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { City } from "../../hooks/useCities";
+import { SearchResultsNearby } from "../../hooks/useNearbyPlacesSearch";
 
 interface Props {
   item: City;

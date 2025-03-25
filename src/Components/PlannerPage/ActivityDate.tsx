@@ -1,7 +1,7 @@
 import { Box, Collapsible, Separator, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { LuChevronDown } from "react-icons/lu";
-import SearchInputPlaces from "./SearchInputPlacesNearby";
+import SearchInputPlacesNearby from "./SearchInputPlacesNearby";
 
 interface Props {
   date: Date;
@@ -31,7 +31,7 @@ const ActivityDate = ({ date, lat, lng }: Props) => {
 
         <Collapsible.Content border={"none"} marginTop="0.5rem">
           <Box padding="4">Choose various activities for this day!</Box>
-          <SearchInputPlaces lat={lat} lng={lng} />
+          <SearchInputPlacesNearby lat={lat} lng={lng} />
         </Collapsible.Content>
       </Collapsible.Root>
       <Separator />
