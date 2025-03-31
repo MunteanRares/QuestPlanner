@@ -1,6 +1,7 @@
 import useData from "./useData";
 
 export interface SearchResultsNearby {
+  placeId: string;
   placeName: string;
   placeTags: string[];
 }

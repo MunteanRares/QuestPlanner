@@ -30,7 +30,6 @@ const ActivityDate = ({ date, lat, lng }: Props) => {
         </Collapsible.Trigger>
 
         <Collapsible.Content border={"none"} marginTop="0.5rem">
-          <Box padding="4">Choose various activities for this day!</Box>
           <SearchInputPlacesNearby lat={lat} lng={lng} />
         </Collapsible.Content>
       </Collapsible.Root>

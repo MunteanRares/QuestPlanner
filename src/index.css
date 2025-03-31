@@ -6,6 +6,7 @@
 
 body {
   overflow-y: scroll;
+  letter-spacing: 0.3px;
 }
 
 google-map {

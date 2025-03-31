@@ -4,6 +4,7 @@ import GoogleMaps from "../GoogleMaps";
 import ContentMainPage from "./ContentMainPage";
 import HeaderPage from "../HeaderPage";
 import getLocation from "../../services/GetLocation";
+import useValidateToken from "../../hooks/useValidateToken";
 
 const MainPage = () => {
   const { positionCoords, isLoading: locationLoading } = getLocation();

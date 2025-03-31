@@ -5,7 +5,12 @@ interface LocationModel {
   longitude: string;
 }
 
-interface DetailedCityModel {
+interface DisplayName {
+  text: string;
+}
+
+export interface DetailedCityModel {
+  displayName: DisplayName;
   formattedAddress: string;
   location: LocationModel;
   photoLinks: string;

@@ -102,12 +102,14 @@ const PlannerPage = () => {
           </Box>
         </Box>
 
-        <Box spaceY={5} className="section section-confirm" minHeight="15rem">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.{" "}
-          {data && data[0] && data[0].location
-            ? data[0].location.latitude
-            : "pula"}
-          <Separator marginY="1rem" />
+        <Box spaceY={5} className="section section-confirm" marginBottom="2rem">
+          <Button
+            disabled={dateList ? false : true}
+            background={"blue.solid"}
+            variant={"solid"}
+          >
+            Save Itinerary
+          </Button>
         </Box>
       </GridItem>
     </Grid>
