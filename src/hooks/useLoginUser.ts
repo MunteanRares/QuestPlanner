@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import useData from "./useData";
+import { useState } from "react";
 import CitiesApiClient from "../services/CitiesApiClient";
 
 export interface Response {

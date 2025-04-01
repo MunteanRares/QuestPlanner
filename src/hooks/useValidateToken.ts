@@ -28,7 +28,6 @@ const useValidateToken = () => {
         return;
       }
 
-      // Only call API if the token is not expired
       CitiesApiClient.post(
         "/api/Users/ValidateToken",
         {},

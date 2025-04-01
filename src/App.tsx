@@ -5,44 +5,43 @@ import PlannerPage from "./Components/PlannerPage/PlannerPage";
 import useValidateToken from "./hooks/useValidateToken";
 import LoginLogoutPage from "./Components/LoginLogoutPage";
 import { useState, useEffect } from "react";
+import ProfilePage from "./Components/ProfilePage/ProfilePage";
+import PrivateRoutes from "./Components/PrivateRoutes";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("jwtToken") || "");
   const { data: isTokenValid } = useValidateToken();
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setToken(localStorage.getItem("jwtToken") || "");
-    };
+  // useEffect(() => {
+  //   const handleStorageChange = () => {
+  //     setToken(localStorage.getItem("jwtToken") || "");
+  //   };
 
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+  //   console.log(isTokenValid.valid);
+
+  //   window.addEventListener("storage", handleStorageChange);
+  //   return () => window.removeEventListener("storage", handleStorageChange);
+  // }, [isTokenValid]);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            isTokenValid?.valid ? (
-              <MainPage />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/:city/:placeId" element={<PlannerPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+
         <Route
           path="/login"
           element={
             isTokenValid?.valid ? (
-              <Navigate to="/" replace />
+              <Navigate to="/" />
             ) : (
               <LoginLogoutPage text="Login" />
             )
           }
         />
-        <Route path="/:city/:placeId" element={<PlannerPage />} />
       </Routes>
     </BrowserRouter>
   );

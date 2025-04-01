@@ -5,6 +5,7 @@ import ContentMainPage from "./ContentMainPage";
 import HeaderPage from "../HeaderPage";
 import getLocation from "../../services/GetLocation";
 import useValidateToken from "../../hooks/useValidateToken";
+import useGetProfile from "../../hooks/useGetProfile";
 
 const MainPage = () => {
   const { positionCoords, isLoading: locationLoading } = getLocation();
