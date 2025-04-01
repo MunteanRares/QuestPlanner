@@ -1,25 +1,31 @@
 import { useState } from "react";
 import CitiesApiClient from "../services/CitiesApiClient";
+import { Response } from "./useLoginUser";
 
-export interface Response {
-  token: string;
-}
-
-const useLoginUser = () => {
+const useRegisterUser = () => {
   const [error, setError] = useState("");
   const [data, setData] = useState<Response>({ token: "" });
   const [isLoading, setLoading] = useState(false);
 
-  const fetchLoginUser = (email: string, password: string) => {
+  const fetchRegisterUser = (
+    username: string,
+    email: string,
+    password: string
+  ) => {
     setLoading(true);
-    CitiesApiClient.post("/api/Users/LoginUser", { email, password })
+    CitiesApiClient.post("/api/Users/RegisterUser", {
+      username,
+      email,
+      password,
+    })
       .then((response) => {
         setData(response.data);
+        console.log(response.data);
         setLoading(false);
         setError("");
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response.data);
         setLoading(false);
       })
       .finally(() => {
@@ -27,7 +33,7 @@ const useLoginUser = () => {
       });
   };
 
-  return { data, isLoading, error, fetchLoginUser };
+  return { data, isLoading, error, fetchRegisterUser };
 };
 
-export default useLoginUser;
+export default useRegisterUser;

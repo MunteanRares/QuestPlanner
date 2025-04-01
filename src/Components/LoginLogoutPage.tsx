@@ -1,34 +1,71 @@
-import { Box, Button, Card, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  Input,
+  Link,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import useLoginUser from "../hooks/useLoginUser";
 import { useNavigate } from "react-router-dom";
+import useRegisterUser from "../hooks/useRegisterUser";
 
 interface Props {
   text: string;
+  type: "login" | "register";
 }
 
-const LoginLogoutPage = ({ text }: Props) => {
+const LoginLogoutPage = ({ text, type }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { data: tokenResponse, fetchLoginUser, error } = useLoginUser();
+  const [username, setUsername] = useState("");
+
+  const {
+    data: loginTokenResponse,
+    fetchLoginUser,
+    error,
+    isLoading,
+  } = useLoginUser();
+
+  const {
+    data: registerTokenResponse,
+    fetchRegisterUser,
+    error: registerError,
+  } = useRegisterUser();
+
   const [token, setToken] = useState(localStorage.getItem("jwtToken") || "");
   const navigate = useNavigate();
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnLogin = (e: React.FormEvent) => {
     e.preventDefault();
     fetchLoginUser(email, password);
     setEmail("");
     setPassword("");
   };
 
+  const handleOnRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchRegisterUser(username, email, password);
+    setUsername("");
+    setEmail("");
+    setPassword("");
+  };
+
   useEffect(() => {
-    if (tokenResponse?.token && token !== tokenResponse.token) {
-      setToken(tokenResponse.token);
-      localStorage.setItem("jwtToken", tokenResponse.token);
-      console.log(`Token updated: ${tokenResponse.token}`);
+    if (loginTokenResponse?.token) {
+      localStorage.setItem("jwtToken", loginTokenResponse.token);
+      console.log(`Token updated: ${loginTokenResponse.token}`);
       navigate(0);
     }
-  }, [tokenResponse, token]);
+
+    if (registerTokenResponse?.token) {
+      localStorage.setItem("jwtToken", registerTokenResponse.token);
+      console.log(`Token updated: ${registerTokenResponse.token}`);
+      navigate(0);
+    }
+  }, [loginTokenResponse, registerTokenResponse]);
 
   return (
     <>
@@ -40,11 +77,36 @@ const LoginLogoutPage = ({ text }: Props) => {
           marginY={"auto"}
         >
           <Text fontSize={"4xl"}>{text}</Text>
+
+          <Text
+            marginBottom={"16px"}
+            fontSize={"14px"}
+            marginTop="2px"
+            color={"red.500"}
+          >
+            {(error !== "" ? "Invalid Credentials" : "") ||
+              (registerError !== "" ? registerError : "")}
+          </Text>
+
           <form
             style={{ display: "flex", flexDirection: "column" }}
-            onSubmit={handleOnSubmit}
+            onSubmit={type == "login" ? handleOnLogin : handleOnRegister}
           >
-            <label htmlFor="email">Email</label>
+            {type == "register" && (
+              <>
+                <label htmlFor="username">Username</label>
+                <Input
+                  id="username"
+                  type="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                ></Input>
+              </>
+            )}
+
+            <label style={{ marginTop: "20px" }} htmlFor="email">
+              Email
+            </label>
             <Input
               id="email"
               type="email"
@@ -52,7 +114,7 @@ const LoginLogoutPage = ({ text }: Props) => {
               onChange={(e) => setEmail(e.target.value)}
             ></Input>
 
-            <label style={{ marginTop: "25px" }} htmlFor="password">
+            <label style={{ marginTop: "20px" }} htmlFor="password">
               Password
             </label>
             <Input
@@ -62,14 +124,33 @@ const LoginLogoutPage = ({ text }: Props) => {
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
 
-            <Text marginTop="10px" color={"red.500"}>
-              {error !== "" ? "Invalid Credentials" : ""}
-            </Text>
+            {isLoading ? (
+              <Spinner marginTop={"13px"} marginX="auto" />
+            ) : (
+              <Text
+                marginTop={"12px"}
+                color={"gray.400"}
+                marginX={"auto"}
+                fontSize={"14px"}
+              >
+                Or {type == "login" ? "sign up" : "log in"}{" "}
+                <Link
+                  color={"#88b4d8"}
+                  variant="underline"
+                  href={type == "login" ? "/register" : "login"}
+                >
+                  here.
+                </Link>
+              </Text>
+            )}
 
             <Button
               marginTop={"1.2rem"}
               marginLeft="auto"
               variant={"subtle"}
+              color={"#333"}
+              fontWeight="600"
+              backgroundColor={"#88b4d8"}
               type="submit"
             >
               Submit

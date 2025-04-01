@@ -7,6 +7,7 @@ import LoginLogoutPage from "./Components/LoginLogoutPage";
 import { useState, useEffect } from "react";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import PrivateRoutes from "./Components/PrivateRoutes";
+import { LuRotateCwSquare } from "react-icons/lu";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("jwtToken") || "");
@@ -33,12 +34,23 @@ function App() {
         </Route>
 
         <Route
+          path="/register"
+          element={
+            isTokenValid?.valid ? (
+              <Navigate to="/" />
+            ) : (
+              <LoginLogoutPage type="register" text="Register" />
+            )
+          }
+        />
+
+        <Route
           path="/login"
           element={
             isTokenValid?.valid ? (
               <Navigate to="/" />
             ) : (
-              <LoginLogoutPage text="Login" />
+              <LoginLogoutPage type="login" text="Login" />
             )
           }
         />
