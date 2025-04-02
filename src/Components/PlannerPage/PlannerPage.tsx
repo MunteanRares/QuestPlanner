@@ -10,7 +10,7 @@ import {
 import NavBar from "../NavBar/NavBar";
 import HeaderPage from "../HeaderPage";
 import { useParams } from "react-router-dom";
-import useCityDetails from "../../hooks/useCityDetails";
+import useCityDetails, { DetailedCityModel } from "../../hooks/useCityDetails";
 import DateRange from "./DateRange";
 import { useEffect, useRef, useState } from "react";
 import { Value } from "./CalendarMenu";
@@ -23,6 +23,12 @@ const PlannerPage = () => {
   const [startDate, setStartDate] = useState<Value>(new Date());
   const [endDate, setEndDate] = useState<Value>(new Date());
   const [dateList, setDateList] = useState<Date[] | null>(null);
+  const [activityData, setActivityData] = useState<
+    {
+      date: Date;
+      places: DetailedCityModel[];
+    }[]
+  >([]);
   const selectActivitiesSection = useRef<HTMLElement>(null);
 
   const handleStartDateChange = (date: Value) => {
@@ -42,9 +48,20 @@ const PlannerPage = () => {
     scrollToBottom();
   };
 
+  const handleActivityChange = (date: Date, places: DetailedCityModel[]) => {
+    setActivityData((prevData) => ({
+      ...prevData,
+      [date.toISOString()]: places, // Store places under the specific date
+    }));
+  };
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+  useEffect(() => {
+    console.log(activityData);
+  }, [activityData]);
 
   return (
     <Grid
@@ -91,12 +108,15 @@ const PlannerPage = () => {
           <Box>
             {dateList
               ? dateList?.map((date, index) => (
-                  <ActivityDate
-                    lng={data[0].location.longitude}
-                    lat={data[0].location.latitude}
-                    key={index}
-                    date={date}
-                  />
+                  <>
+                    <ActivityDate
+                      lng={data[0].location.longitude}
+                      lat={data[0].location.latitude}
+                      key={index}
+                      date={date}
+                      onSelectedPlaces={handleActivityChange}
+                    />
+                  </>
                 ))
               : "Please choose the desired dates"}
           </Box>

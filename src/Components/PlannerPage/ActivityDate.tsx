@@ -1,20 +1,26 @@
-import { Box, Collapsible, Separator, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Collapsible, Separator, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { LuChevronDown } from "react-icons/lu";
 import SearchInputPlacesNearby from "./SearchInputPlacesNearby";
+import { DetailedCityModel } from "../../hooks/useCityDetails";
 
 interface Props {
   date: Date;
   lat: string;
   lng: string;
+  onSelectedPlaces: (date: Date, places: DetailedCityModel[]) => void;
 }
 
-const ActivityDate = ({ date, lat, lng }: Props) => {
-  const [isOpen, setOpen] = useState(false);
+const ActivityDate = ({ date, lat, lng, onSelectedPlaces }: Props) => {
+  const [selectedPlaces, setSelectedPlaces] = useState<DetailedCityModel[]>([]);
 
   const formattedDate = `${date.toLocaleString("en-US", {
     weekday: "long",
   })}, ${date.toLocaleString("en-US", { month: "long" })} ${date.getDate()}`;
+
+  useEffect(() => {
+    onSelectedPlaces(date, selectedPlaces);
+  }, [selectedPlaces, date]);
 
   return (
     <>
@@ -30,7 +36,13 @@ const ActivityDate = ({ date, lat, lng }: Props) => {
         </Collapsible.Trigger>
 
         <Collapsible.Content border={"none"} marginTop="0.5rem">
-          <SearchInputPlacesNearby lat={lat} lng={lng} />
+          <SearchInputPlacesNearby
+            lat={lat}
+            lng={lng}
+            onPlacesChange={(places: DetailedCityModel[]) =>
+              setSelectedPlaces(places)
+            }
+          />
         </Collapsible.Content>
       </Collapsible.Root>
       <Separator />

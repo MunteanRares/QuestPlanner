@@ -19,13 +19,15 @@ import { IoMdClose } from "react-icons/io";
 import useCityDetails from "../../hooks/useCityDetails";
 import { DetailedCityModel } from "../../hooks/useCityDetails";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Detail } from "react-calendar/dist/esm/shared/types.js";
 
 interface Props {
   lat: string;
   lng: string;
+  onPlacesChange: (places: DetailedCityModel[]) => void;
 }
 
-const SearchInputPlacesNearby = ({ lat, lng }: Props) => {
+const SearchInputPlacesNearby = ({ lat, lng, onPlacesChange }: Props) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const { data, isLoading } = useNearbyPlacesSearch(searchTerm, lat, lng);
@@ -40,6 +42,10 @@ const SearchInputPlacesNearby = ({ lat, lng }: Props) => {
   };
 
   const [addedPlaces, setAddedPlaces] = useState<DetailedCityModel[]>([]);
+
+  useEffect(() => {
+    onPlacesChange(addedPlaces);
+  }, [addedPlaces]);
 
   const handleOnDeletePlace = (index: number) => {
     setAddedPlaces((prevAdded) => prevAdded.filter((_, i) => i !== index));
