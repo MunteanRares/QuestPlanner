@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import CitiesApiClient from "../services/CitiesApiClient";
+import { CanceledError } from "axios";
 
 export interface Response {
   valid: boolean;
@@ -12,6 +13,8 @@ const useValidateToken = () => {
   const token = localStorage.getItem("jwtToken");
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (!token) {
       setData({ valid: false });
       return;
@@ -30,7 +33,7 @@ const useValidateToken = () => {
 
       CitiesApiClient.post(
         "/api/Users/ValidateToken",
-        {},
+        { signal: controller.signal },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -39,7 +42,8 @@ const useValidateToken = () => {
           setData(response.data);
         })
         .catch((err) => {
-          console.error("Token validation error:", err);
+          if (err instanceof CanceledError)
+            console.error("Token validation error:", err);
           setError(err);
           setData({ valid: false });
         });
@@ -48,6 +52,8 @@ const useValidateToken = () => {
       setData({ valid: false });
       localStorage.removeItem("jwtToken");
     }
+
+    return controller.abort();
   }, [token]);
 
   return { data, error };

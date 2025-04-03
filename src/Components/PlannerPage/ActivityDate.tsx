@@ -19,8 +19,9 @@ const ActivityDate = ({ date, lat, lng, onSelectedPlaces }: Props) => {
   })}, ${date.toLocaleString("en-US", { month: "long" })} ${date.getDate()}`;
 
   useEffect(() => {
+    console.log(selectedPlaces);
     onSelectedPlaces(date, selectedPlaces);
-  }, [selectedPlaces, date]);
+  }, [selectedPlaces]);
 
   return (
     <>

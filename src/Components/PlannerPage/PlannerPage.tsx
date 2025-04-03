@@ -16,6 +16,25 @@ import { useEffect, useRef, useState } from "react";
 import { Value } from "./CalendarMenu";
 import ActivityDate from "./ActivityDate";
 import getDateRange from "../../services/getDateRange";
+import useSaveItinerary from "../../hooks/useSaveItinerary";
+import { useNavigate } from "react-router-dom";
+
+export interface activityDataModel {
+  date: Date;
+  places: DetailedCityModel[];
+}
+
+export interface itineraryModel {
+  title: string | undefined;
+  startDate: Date;
+  days: {
+    date: Date;
+    activities: {
+      location: string;
+      imageUrl: string;
+    }[];
+  }[];
+}
 
 const PlannerPage = () => {
   const { city, placeId } = useParams();
@@ -23,13 +42,10 @@ const PlannerPage = () => {
   const [startDate, setStartDate] = useState<Value>(new Date());
   const [endDate, setEndDate] = useState<Value>(new Date());
   const [dateList, setDateList] = useState<Date[] | null>(null);
-  const [activityData, setActivityData] = useState<
-    {
-      date: Date;
-      places: DetailedCityModel[];
-    }[]
-  >([]);
+  const [activityData, setActivityData] = useState<activityDataModel[]>([]);
+  const { saveItinerary } = useSaveItinerary();
   const selectActivitiesSection = useRef<HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleStartDateChange = (date: Value) => {
     setStartDate(date);
@@ -49,19 +65,42 @@ const PlannerPage = () => {
   };
 
   const handleActivityChange = (date: Date, places: DetailedCityModel[]) => {
-    setActivityData((prevData) => ({
-      ...prevData,
-      [date.toISOString()]: places, // Store places under the specific date
-    }));
+    setActivityData((prevData) => {
+      const existingEntryIndex = prevData.findIndex(
+        (entry) => entry.date.toDateString() === date.toDateString()
+      );
+
+      if (existingEntryIndex !== -1) {
+        const updatedData = [...prevData];
+        updatedData[existingEntryIndex] = { date, places };
+        return updatedData;
+      } else {
+        return [...prevData, { date, places }];
+      }
+    });
   };
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  useEffect(() => {
+  const handleOnSaveItinerary = () => {
+    activityData.map((map) => console.log(map));
+    const itinerary = {
+      title: city && city,
+      startDate: new Date(activityData[0].date),
+      days: activityData.map((day) => ({
+        date: day.date,
+        activities: day.places.map((activity) => ({
+          location: activity.formattedAddress,
+          imageUrl: activity.photoLinks,
+        })),
+      })),
+    };
     console.log(activityData);
-  }, [activityData]);
+    saveItinerary(itinerary);
+    navigate("/profile");
+  };
 
   return (
     <Grid
@@ -124,6 +163,7 @@ const PlannerPage = () => {
 
         <Box spaceY={5} className="section section-confirm" marginBottom="2rem">
           <Button
+            onClick={handleOnSaveItinerary}
             disabled={dateList ? false : true}
             background={"blue.solid"}
             variant={"solid"}

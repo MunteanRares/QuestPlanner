@@ -69,8 +69,10 @@ const LoginLogoutPage = ({ text, type }: Props) => {
 
   return (
     <>
-      <Box height={"100vh"} display="flex">
+      <Box className="login-page-container" height={"100vh"} display="flex">
+        <div className="overlay"></div>
         <Card.Root
+          shadow={"xl"}
           padding={"16px"}
           width={"25rem"}
           marginX={"auto"}
@@ -135,7 +137,7 @@ const LoginLogoutPage = ({ text, type }: Props) => {
               >
                 Or {type == "login" ? "sign up" : "log in"}{" "}
                 <Link
-                  color={"#88b4d8"}
+                  color={"#087f5b"}
                   variant="underline"
                   href={type == "login" ? "/register" : "login"}
                 >
@@ -150,7 +152,7 @@ const LoginLogoutPage = ({ text, type }: Props) => {
               variant={"subtle"}
               color={"#333"}
               fontWeight="600"
-              backgroundColor={"#88b4d8"}
+              backgroundColor={"#087f5b"}
               type="submit"
             >
               Submit

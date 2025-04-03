@@ -70,3 +70,27 @@ google-map {
 .section-middle {
   margin-top: 2rem;
 }
+
+/* .login-page-container {
+  background-image: url("./assets/loginpagebg.webp");
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px); 
+} */
+
+.login-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/loginpagebg.webp");
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* Keeps the background image layer behind the content */
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CitiesApiClient from "../services/CitiesApiClient";
 import { Response } from "./useLoginUser";
+import { CanceledError } from "axios";
 
 const useRegisterUser = () => {
   const [error, setError] = useState("");
@@ -12,8 +13,11 @@ const useRegisterUser = () => {
     email: string,
     password: string
   ) => {
+    const controller = new AbortController();
+
     setLoading(true);
     CitiesApiClient.post("/api/Users/RegisterUser", {
+      signal: controller.signal,
       username,
       email,
       password,
@@ -25,12 +29,15 @@ const useRegisterUser = () => {
         setError("");
       })
       .catch((err) => {
+        if (err instanceof CanceledError) return;
         setError(err.response.data);
         setLoading(false);
       })
       .finally(() => {
         setLoading(false);
       });
+
+    return controller.abort();
   };
 
   return { data, isLoading, error, fetchRegisterUser };
