@@ -100,6 +100,7 @@ const PlannerPage = () => {
     console.log(activityData);
     saveItinerary(itinerary);
     navigate("/profile");
+    navigate(0);
   };
 
   return (

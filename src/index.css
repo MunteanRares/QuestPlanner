@@ -94,3 +94,19 @@ google-map {
 .overlay {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.closeItineraryIcon {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 20px;
+  font-size: 28px;
+  color: #777;
+  margin-left: 16px;
+
+  transition: all 0.4s ease; /* Optional for smooth transition */
+}
+
+.closeItineraryIcon:hover {
+  cursor: pointer;
+  color: #f03e3e;
+}
